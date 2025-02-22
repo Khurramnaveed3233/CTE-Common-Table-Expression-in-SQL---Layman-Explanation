@@ -35,4 +35,59 @@ Kya Ho Raha Hai?
   - Phir McDonald Table Se Wo Products Nikale Jaa Rahe Hain Jinki Energy Avg Se Zyada Hai.
   - Iska Faida Yeh Hai Ke AVG(energy) Ko Bar Bar Calculate Nahi Karna Pada, CTE Ne Ye Ek Dafa Hi Calculate Karke Store Kar Liya.
 
+Example 2: CTE Ka Use Multiple Queries Ke Sath
+Agar aapko sab products ka energy rank bhi chahiye aur high-energy products bhi dekhne hain, to CTE multiple bar reuse ho sakta hai:
+
+    WITH RankedProducts AS (  
+    SELECT  
+        Product_name,  
+        energy,  
+        RANK() OVER (ORDER BY energy DESC) AS energy_rank  
+    FROM McDonald  )  
+    
+    SELECT * FROM RankedProducts WHERE energy_rank <= 5;  
+
+Kya Ho Raha Hai?
+
+ - CTE (RankedProducts) Sab Products Ko Energy Ke Mutabiq Rank Kar Raha Hai.
+ - Phir SELECT * FROM RankedProducts WHERE energy_rank <= 5 = Top 5 Energy Products Ko Dikhata Hai.
+
+CTE vs Subquery (Kyun CTE Behtar Hai?)
+Agar CTE na hota to hamein subquery likhni parti, jo mushkil aur kam samajhne layak hoti:
+
+    SELECT Product_name, energy  
+    FROM McDonald  
+    WHERE energy > (SELECT AVG(energy) FROM McDonald);
+
+Masla:
+
+ - Agar humein ye multiple times use karna ho, to subquery bar bar likhni padegi.
+ - CTE ek dafa likho aur jitni bar chaho use karo.
+
+CTE Kab Istemaal Karna Chahiye?
+
+ - Jab Query Complex Ho → Jaise ranking, filtering, ya multiple calculations ek saath karni ho.
+ - Jab Same Data Multiple Dafa Use Karna Ho → Taake calculation repeat na ho.
+ - Jab Code Ko Clean Aur Readable Banana Ho → Badi queries choti aur samajhne layak ban jayein.
+   
+CTE Ki Limitations
+
+ - CTE Sirf Temporary Hota Hai → Sirf us query ke liye available rehta hai, database mein store nahi hota.
+ - CTE Ko Index Nahi Lagta → Is wajah se bohot bara data ho to performance slow ho sakti hai.
+ - Recursive CTE Thora Advanced Hai → Normal CTE easy hota hai, magar recursive CTE thora mushkil hota hai jo self-referencing queries ke liye hota hai.
+
+Summary (Layman Explanation)
+
+ - CTE ek temporary table ki tarah hota hai jo ek hi query ke liye use hota hai.
+ - Iska faida hai ke readability, performance aur reuseability barhti hai.
+ - Jab aapko ek hi calculation multiple dafa use karni ho, CTE best option hota hai.
+ - Agar koi confusion hai to batao, aur bhi simple example se samjha sakta hoon! 😊
+
+
+
+
+
+
+
+
 
