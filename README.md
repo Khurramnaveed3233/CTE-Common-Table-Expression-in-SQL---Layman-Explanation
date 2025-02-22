@@ -81,7 +81,8 @@ Summary (Layman Explanation)
  - CTE ek temporary table ki tarah hota hai jo ek hi query ke liye use hota hai.
  - Iska faida hai ke readability, performance aur reuseability barhti hai.
  - Jab aapko ek hi calculation multiple dafa use karni ho, CTE best option hota hai.
- - Agar koi confusion hai to batao, aur bhi simple example se samjha sakta hoon! 😊
+
+Agar koi confusion hai to batao, aur bhi simple example se samjha sakta hoon! 😊
 
 
 
